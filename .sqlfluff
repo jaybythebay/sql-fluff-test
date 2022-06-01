@@ -1,0 +1,50 @@
+[sqlfluff]
+dialect = snowflake
+
+[sqlfluff:rules]
+tab_space_size = 4
+
+[sqlfluff:rules:L006]
+[sqlfluff:rules:L008]
+[sqlfluff:rules:L009]
+
+[sqlfluff:rules:L010]
+capitalisation_policy = upper
+
+[sqlfluff:rules:L011]
+aliasing = implicit
+
+[sqlfluff:rules:L012]
+aliasing = explicit
+
+[sqlfluff:rules:L013]
+allow_scalar = False
+
+[sqlfluff:rules:L014]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:L016]
+ignore_comment_clauses = False
+ignore_comment_lines = False
+indent_unit = tab
+max_line_length = 120
+tab_space_size = 4
+
+[sqlfluff:rules:L017]
+[sqlfluff:rules:L018]
+
+[sqlfluff:rules:L019]
+comma_style = leading
+
+[sqlfluff:rules:L20]
+[sqlfluff:rules:L22]
+[sqlfluff:rules:L23]
+[sqlfluff:rules:L25]
+[sqlfluff:rules:L26]
+[sqlfluff:rules:L27]
+[sqlfluff:rules:L28]
+[sqlfluff:rules:L29]
+
+[sqlfluff:rules:L30]
+extended_capitalisation_policy = upper
+
