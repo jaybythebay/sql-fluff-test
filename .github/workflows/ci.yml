@@ -20,31 +20,42 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Get changed files
-        id: get_file_changes
-        uses: trilom/file-changes-action@v1.2.4
+#      https://discourse.getdbt.com/t/running-sqlfluff-fix-on-prs-as-a-github-action-with-inline-suggestions/4174
+       - uses: yu-iskw/action-sqlfluff@v3
+#        if: steps.check.outputs.triggered == 'true'
+        id: lint-sql
         with:
-          output: ' '
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          sqlfluff_version: "0.11.1"
+          sqlfluff_command: "fix" # Or "lint"
+          config: "${{ github.workspace }}/.sqlfluff"
+          paths: '${{ github.workspace }}/models'
 
-      - name: Get new and changed .sql files in /models to lint
-        id: get_files_to_lint
-        shell: bash -l {0}
-        run: |
-          # Set the command in the $() brackets as an output to use in later steps
-          echo "::set-output name=lintees::$(
-          # Issue where grep regular expressions don't work as expected on the
-          # Github Actions shell, check models/ folder
-          echo \
-          $(echo ${{ steps.get_file_changes.outputs.files_modified }} |
-          tr -s ' ' '\n' |
-          grep -E '^models.*[.]sql$' |
-          tr -s '\n' ' ') \
-          $(echo ${{ steps.get_file_changes.outputs.files_added }} |
-          tr -s ' ' '\n' |
-          grep -E '^models.*[.]sql$' |
-          tr -s '\n' ' ')
-          )"
+#      - name: Get changed files
+#        id: get_file_changes
+#        uses: trilom/file-changes-action@v1.2.4
+#        with:
+#          output: ' '
+#
+#      - name: Get new and changed .sql files in /models to lint
+#        id: get_files_to_lint
+#        shell: bash -l {0}
+#        run: |
+#          # Set the command in the $() brackets as an output to use in later steps
+#          echo "::set-output name=lintees::$(
+#          # Issue where grep regular expressions don't work as expected on the
+#          # Github Actions shell, check models/ folder
+#          echo \
+#          $(echo ${{ steps.get_file_changes.outputs.files_modified }} |
+#          tr -s ' ' '\n' |
+#          grep -E '^models.*[.]sql$' |
+#          tr -s '\n' ' ') \
+#          $(echo ${{ steps.get_file_changes.outputs.files_added }} |
+#          tr -s ' ' '\n' |
+#          grep -E '^models.*[.]sql$' |
+#          tr -s '\n' ' ')
+#          )"
 
 #      - name: Lint models
 #        run: "sqlfluff lint ."
