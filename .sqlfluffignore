@@ -5,4 +5,4 @@ dbt_modules/
 dbt_packages/
 macros/
 
-ugly.sql
+models/unformatted_ignore.sql
