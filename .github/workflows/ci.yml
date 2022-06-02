@@ -36,8 +36,8 @@ on:
           reporter: github-pr-review
           sqlfluff_version: "0.13.0"
           sqlfluff_command: "fix" # Or "lint"
-          config: "jaybythebay/sql-fluff-test/.sqlfluff"
-          paths: 'jaybythebay/sql-fluff-test/models'
+          config: "${{ github.workspace }}/.sqlfluff"
+          paths: '${{ github.workspace }}/models'
       - name: 'Show outputs (Optional)'
         shell: bash
         run: |
