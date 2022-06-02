@@ -1,58 +1,58 @@
-#name: Lint and Fix Formatting
-#on: [push]
-#jobs:
-#  build:
-#
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: true
-#      matrix:
-#        python-version: ["3.9"]
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: Set up Python ${{ matrix.python-version }}
-#        uses: actions/setup-python@v3
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#      - name: Install dependencies
-#        run: |
-#          python -m pip install --upgrade pip
-#          pip install flake8 pytest
-#          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-name: sqlfluff with reviewdog
+name: Lint and Fix Formatting
 on: [push]
-  test-check:
-    name: runner / sqlfluff (github-check)
+jobs:
+  build:
+
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.9"]
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: yu-iskw/action-sqlfluff@v3
-        id: lint-sql
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          sqlfluff_version: "0.13.0"
-          sqlfluff_command: "fix" # Or "lint"
-          config: "${{ github.workspace }}/.sqlfluff"
-          paths: '${{ github.workspace }}/models'
-      - name: 'Show outputs (Optional)'
-        shell: bash
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
         run: |
-          echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
-          echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
-##      https://discourse.getdbt.com/t/running-sqlfluff-fix-on-prs-as-a-github-action-with-inline-suggestions/4174
-#       - uses: yu-iskw/action-sqlfluff@v3
-##        if: steps.check.outputs.triggered == 'true'
-#          id: lint-sql
-#          with:
-#            github_token: ${{ secrets.github_token }}
-#            reporter: github-pr-review
-#            sqlfluff_version: "0.11.1"
-#            sqlfluff_command: "fix" # Or "lint"
-#            config: "${{ github.workspace }}/.sqlfluff"
-#            paths: '${{ github.workspace }}/models'
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+  test-check:
+  name: sqlfluff with reviewdog
+  on: [push]
+    test-check:
+      name: runner / sqlfluff (github-check)
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: yu-iskw/action-sqlfluff@v3
+          id: lint-sql
+          with:
+            github_token: ${{ secrets.github_token }}
+            reporter: github-pr-review
+            sqlfluff_version: "0.13.0"
+            sqlfluff_command: "fix" # Or "lint"
+            config: "${{ github.workspace }}/.sqlfluff"
+            paths: '${{ github.workspace }}/models'
+        - name: 'Show outputs (Optional)'
+          shell: bash
+          run: |
+            echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
+            echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
+  ##      https://discourse.getdbt.com/t/running-sqlfluff-fix-on-prs-as-a-github-action-with-inline-suggestions/4174
+  #       - uses: yu-iskw/action-sqlfluff@v3
+  ##        if: steps.check.outputs.triggered == 'true'
+  #          id: lint-sql
+  #          with:
+  #            github_token: ${{ secrets.github_token }}
+  #            reporter: github-pr-review
+  #            sqlfluff_version: "0.11.1"
+  #            sqlfluff_command: "fix" # Or "lint"
+  #            config: "${{ github.workspace }}/.sqlfluff"
+  #            paths: '${{ github.workspace }}/models'
 
 #      - name: Get changed files
 #        id: get_file_changes
