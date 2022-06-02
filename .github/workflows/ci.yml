@@ -20,39 +20,37 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
   test-check:
-    name: sqlfluff with reviewdog
-    on: [push]
-      test-check:
-        name: runner / sqlfluff (github-check)
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: yu-iskw/action-sqlfluff@v3
-            id: lint-sql
-            with:
-              github_token: ${{ secrets.github_token }}
-              reporter: github-pr-review
-              sqlfluff_version: "0.13.0"
-              sqlfluff_command: "fix" # Or "lint"
-              config: "${{ github.workspace }}/.sqlfluff"
-              paths: '${{ github.workspace }}/models'
-          - name: 'Show outputs (Optional)'
-            shell: bash
-            run: |
-              echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
-              echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
-  ##      https://discourse.getdbt.com/t/running-sqlfluff-fix-on-prs-as-a-github-action-with-inline-suggestions/4174
-  #       - uses: yu-iskw/action-sqlfluff@v3
-  ##        if: steps.check.outputs.triggered == 'true'
-  #          id: lint-sql
-  #          with:
-  #            github_token: ${{ secrets.github_token }}
-  #            reporter: github-pr-review
-  #            sqlfluff_version: "0.11.1"
-  #            sqlfluff_command: "fix" # Or "lint"
-  #            config: "${{ github.workspace }}/.sqlfluff"
-  #            paths: '${{ github.workspace }}/models'
+    name: runner / sqlfluff (github-check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: yu-iskw/action-sqlfluff@v3
+        id: lint-sql
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          sqlfluff_version: "0.13.0"
+          sqlfluff_command: "fix" # Or "lint"
+          config: "${{ github.workspace }}/.sqlfluff"
+          paths: '${{ github.workspace }}/models'
+      - name: 'Show outputs (Optional)'
+        shell: bash
+        run: |
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
+##      https://discourse.getdbt.com/t/running-sqlfluff-fix-on-prs-as-a-github-action-with-inline-suggestions/4174
+#       - uses: yu-iskw/action-sqlfluff@v3
+##        if: steps.check.outputs.triggered == 'true'
+#          id: lint-sql
+#          with:
+#            github_token: ${{ secrets.github_token }}
+#            reporter: github-pr-review
+#            sqlfluff_version: "0.11.1"
+#            sqlfluff_command: "fix" # Or "lint"
+#            config: "${{ github.workspace }}/.sqlfluff"
+#            paths: '${{ github.workspace }}/models'
 
 #      - name: Get changed files
 #        id: get_file_changes
@@ -81,13 +79,13 @@ jobs:
 
 #      - name: Lint models
 #        run: "sqlfluff lint ."
-#
-#      - name: Lint dbt models
-#        if: steps.get_files_to_lint.outputs.lintees != ''
-#        shell: bash -l {0}
-#        run: |
-#          sqlfluff lint --format github-annotation --annotation-level failure ${{ steps.get_files_to_lint.outputs.lintees }} > annotations.json
-#
+
+      - name: Lint dbt models
+        if: steps.get_files_to_lint.outputs.lintees != ''
+        shell: bash -l {0}
+        run: |
+          sqlfluff lint --format github-annotation --annotation-level failure ${{ steps.get_files_to_lint.outputs.lintees }} > annotations.json
+            
 
 #    steps:
 #      - uses: "actions/checkout@v2"
