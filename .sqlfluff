@@ -1,5 +1,6 @@
 [sqlfluff]
 dialect = snowflake
+templater = dbt
 
 [sqlfluff:rules]
 tab_space_size = 4
@@ -36,15 +37,59 @@ tab_space_size = 4
 [sqlfluff:rules:L019]
 comma_style = leading
 
-[sqlfluff:rules:L20]
-[sqlfluff:rules:L22]
-[sqlfluff:rules:L23]
-[sqlfluff:rules:L25]
-[sqlfluff:rules:L26]
-[sqlfluff:rules:L27]
-[sqlfluff:rules:L28]
-[sqlfluff:rules:L29]
+[sqlfluff:rules:L020]
+[sqlfluff:rules:L022]
+[sqlfluff:rules:L023]
+[sqlfluff:rules:L025]
+[sqlfluff:rules:L026]
+[sqlfluff:rules:L027]
+[sqlfluff:rules:L028]
+[sqlfluff:rules:L029]
 
-[sqlfluff:rules:L30]
+[sqlfluff:rules:L030]
 extended_capitalisation_policy = upper
+
+[sqlfluff:rules:L040]
+capitalisation_policy = upper
+
+[sqlfluff:rules:L031]
+[sqlfluff:rules:L032]
+[sqlfluff:rules:L034]
+[sqlfluff:rules:L036]
+[sqlfluff:rules:L037]
+
+[sqlfluff:rules:L038]
+select_clause_trailing_comma = forbid
+
+[sqlfluff:rules:L039]
+[sqlfluff:rules:L041]
+[sqlfluff:rules:L042]
+[sqlfluff:rules:L043]
+[sqlfluff:rules:L046]
+
+[sqlfluff:rules:L047]
+[sqlfluff:rules:L048]
+[sqlfluff:rules:L049]
+[sqlfluff:rules:L050]
+[sqlfluff:rules:L053]
+[sqlfluff:rules:L054]
+
+[sqlfluff:rules:L057]
+allow_space_in_identifier = False
+
+[sqlfluff:rules:L058]
+
+[sqlfluff:rules:L059]
+prefer_quoted_identifiers = False
+
+[sqlfluff:rules:L060]
+[sqlfluff:rules:L061]
+
+[sqlfluff:rules:L063]
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:L064]
+preferred_quoted_literal_style = single_quotes
+[sqlfluff:rules:L065]
+
 
