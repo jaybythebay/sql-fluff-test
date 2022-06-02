@@ -1,8 +1,12 @@
 [sqlfluff]
 dialect = snowflake
-templater = dbt
 
 [sqlfluff:rules]
+tab_space_size = 4
+
+[sqlfluff:rules:L003]
+hanging_indents = True
+indent_unit = tab
 tab_space_size = 4
 
 [sqlfluff:rules:L006]
@@ -49,9 +53,6 @@ comma_style = leading
 [sqlfluff:rules:L030]
 extended_capitalisation_policy = upper
 
-[sqlfluff:rules:L040]
-capitalisation_policy = upper
-
 [sqlfluff:rules:L031]
 [sqlfluff:rules:L032]
 [sqlfluff:rules:L034]
@@ -62,6 +63,10 @@ capitalisation_policy = upper
 select_clause_trailing_comma = forbid
 
 [sqlfluff:rules:L039]
+
+[sqlfluff:rules:L040]
+capitalisation_policy = upper
+
 [sqlfluff:rules:L041]
 [sqlfluff:rules:L042]
 [sqlfluff:rules:L043]
