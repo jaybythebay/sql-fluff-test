@@ -25,6 +25,8 @@ jobs:
     name: runner / sqlfluff (github-check)
     runs-on: ubuntu-latest
     steps:
+      - name: What is the head ref?
+        run: echo Hello world from $GITHUB_HEAD_REF!
       - uses: actions/checkout@v2
       - uses: yu-iskw/action-sqlfluff@v3
         id: lint-sql
@@ -33,8 +35,8 @@ jobs:
           reporter: github-pr-review
           sqlfluff_version: "0.13.0"
           sqlfluff_command: "fix" # Or "lint"
-          config: "${{ github.workspace }}/.sqlfluff"
-          paths: '${{ github.workspace }}/models'
+          config: "${{  github.event.pull_request.head_ref }}/.sqlfluff"
+          paths: '${{  github.event.pull_request.head_ref }}/models'
       - name: 'Show outputs (Optional)'
         shell: bash
         run: |
