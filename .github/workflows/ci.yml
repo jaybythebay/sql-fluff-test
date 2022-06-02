@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: What is the head ref?
         run: echo Hello world from $GITHUB_HEAD_REF!
+      - name: What is the base ref?
+        run: echo Hello world from $GITHUB_BASE_REF!
       - uses: actions/checkout@v2
       - uses: yu-iskw/action-sqlfluff@v3
         id: lint-sql
