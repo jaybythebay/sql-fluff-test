@@ -1,11 +1,11 @@
 name: SQLFluff
 on:
   workflow_dispatch:
-  push:
+  pull_request:
 jobs:
   fix-formatting:
     name: FIX with reviewdog
-    description: Run FIX to suggest changes to the code from the SQLFluff formatting standards. If there are a lot of
+#    description: Run FIX to suggest changes to the code from the SQLFluff formatting standards. If there are a lot of
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
