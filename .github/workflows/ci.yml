@@ -4,8 +4,8 @@ on:
   pull_request:
 jobs:
   fix-formatting:
-    name: FIX - SQLFluff FIX with reviewdog
-#    description: Run FIX to suggest changes to the code from the SQLFluff formatting standards. If there are a lot of
+    name: FIX with reviewdog
+    description: Run FIX to suggest changes to the code from the SQLFluff formatting standards. If there are a lot of
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
           echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
           echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
   lint-formatting:
-    name: LINT - SQLFluff
+    name: LINT
 #    description: Run Lint.  This will make PRs fail if they don't conform to the standards.
     runs-on: ubuntu-latest
     strategy:

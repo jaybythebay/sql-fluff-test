@@ -9,6 +9,11 @@ hanging_indents = True
 indent_unit = tab
 tab_space_size = 4
 
+[sqlfluff:rules:L004]
+indent_unit = tab
+tab_space_size = 4
+
+
 [sqlfluff:rules:L006]
 [sqlfluff:rules:L008]
 [sqlfluff:rules:L009]
