@@ -1,25 +1,25 @@
 name: Lint and Fix Formatting
 on: [push]
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        python-version: ["3.9"]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+#  build:
+#
+#    runs-on: ubuntu-latest
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        python-version: ["3.9"]
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v3
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install flake8 pytest
+#          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
   test-check:
     name: runner / sqlfluff (github-check)
@@ -35,10 +35,11 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          sqlfluff_version: "0.13.0"
+          sqlfluff_version: "0.13.1"
           sqlfluff_command: "fix" # Or "lint"
-          config: "${{  github.event.pull_request.head_ref }}/.sqlfluff"
-          paths: '${{  github.event.pull_request.head_ref }}/models'
+          dialect: "snowflake"
+          config: "${{ github.workspace }}/.sqlfluff"
+          paths: '${{ github.workspace }}/models'
       - name: 'Show outputs (Optional)'
         shell: bash
         run: |
