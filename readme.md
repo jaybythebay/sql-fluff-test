@@ -14,4 +14,4 @@ sqlfluff fix . --rules L003,L004,L006,L009,L010,L011,L012,L013,L014,L016,L017,L0
 
 ```
 
--trying to push to production"
+"trying to push to production"
